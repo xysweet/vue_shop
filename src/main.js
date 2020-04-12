@@ -4,6 +4,10 @@ import router from './router'
 import store from './store'
 import './plugins/element.js'
 
+import axios from 'axios'
+axios.defaults.baseURL=''
+Vue.prototype.$http=axios;
+
 Vue.config.productionTip = false
 
 new Vue({
