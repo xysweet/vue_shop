@@ -51,7 +51,7 @@
                     console.log(valid);
                     if(!valid) return ;
                     const {data:res}=await this.$http.post("login",this.loginForm);
-                    if(res.meta.status !== 200) return this.$message.error('fail');
+                    if(res.meta.status !== 200) return this.$message.error(res.meta.msg);
                     this.$message.success('success');
                     window.sessionStorage.setItem('token',res.data.token)
                     this.$router.push('/home');

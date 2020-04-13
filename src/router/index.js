@@ -12,7 +12,17 @@ const routes = [
       component:()=>import('../components/Login')
     },{
       path:'/home',
-      component:()=>import('../views/Home')
+      component:()=>import('../views/Home'),
+        redirect: '/welcome',
+        children:[
+            {
+                path:'/welcome',
+                component:()=>import('../components/Welcome')
+            },{
+                path:'/users',
+                component:()=>import('../components/Users/User')
+            }
+        ]
     }
 ]
 
@@ -25,10 +35,9 @@ router.beforeEach((to,from,next)=>{
   //to将要去
   //from 从哪来
   //next函数.放行
-  if(to.path==='/login')return next();
   //获取token
   const tokenStr=window.sessionStorage.getItem('token');
-  if(!tokenStr) return next('/login');
+  if(to.meta === true && !tokenStr)return next('/login');
   next();
 });
 
