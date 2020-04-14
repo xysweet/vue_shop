@@ -21,9 +21,15 @@ const routes = [
             },{
                 path:'/users',
                 component:()=>import('../components/Users/User')
+            },{
+                path:'/rights',
+                component:()=>import('../components/Power/Rights')
+            },{
+                path:'/roles',
+                component:()=>import('../components/Power/Roles')
             }
         ]
-    }
+    },
 ]
 
 const router = new VueRouter({
