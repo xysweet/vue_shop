@@ -27,6 +27,9 @@ const routes = [
             },{
                 path:'/roles',
                 component:()=>import('../components/Power/Roles')
+            },{
+                path:'/categories',
+                component:()=>import('../components/goods/category')
             }
         ]
     },
