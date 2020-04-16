@@ -33,6 +33,9 @@ const routes = [
             },{
                 path:'/reports',
                 component:()=>import('../components/report/Report')
+            },{
+                path:'/params',
+                component:()=>import('../components/goods/Params')
             }
         ]
     },
