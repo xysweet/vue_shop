@@ -151,11 +151,9 @@
                 if (res.meta.status !== 200) {
                     return this.$message.error(res.meta.msg);
                 }
-                console.log(res.data);
                 this.parentCateList = res.data;
             },
             parentCateChange() {
-                console.log(this.selectKeys)
                 if (this.selectKeys.length > 0) {
                     this.addCategoryForm.cat_pid = this.selectKeys[this.selectKeys.length - 1];
                     this.addCategoryForm.cat_level = this.selectKeys.length;
@@ -178,7 +176,6 @@
                     this.getCategoryList();
                     this.dialogVisible=false;
                 });
-                console.log(this.parentCateChange());
             },
             closeAddCategoryForm(){
                 this.$refs.cateForm.resetFields();

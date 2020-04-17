@@ -70,7 +70,7 @@
                                         v-for="(tag,i) in scope.row.attr_vals"
                                         closable
                                         :disable-transitions="false"
-                                        @close="handleClose(tag)">
+                                        @close="handleClose(i,scope.row)">
                                     {{tag}}
                                 </el-tag>
                                 <el-input
@@ -79,6 +79,7 @@
                                         v-model="scope.row.inputValue"
                                         ref="saveTagInput"
                                         size="small"
+                                        width="20%"
                                         @keyup.enter.native="handleInputConfirm(scope.row)"
                                         @blur="handleInputConfirm(scope.row)"
                                 >
@@ -159,6 +160,8 @@
             async getParams() {
                 if (this.selectCateKeys.length != 3) {
                     this.selectCateKeys = [];
+                    this.manyData=[];
+                    this.onlyData=[];
                     return;
                 }
                 const {data: res} = await this.$http.get(`categories/${this.cateId}/attributes?sel=${this.activeName}`)
@@ -196,8 +199,9 @@
                 });
 
             },
-            handleClose(tag){
-                console.log(tag)
+            handleClose(i,row){
+                this.setAttrVal(row);
+                row.attr_vals.split(i,1);
             },
            async handleInputConfirm(row){
                 if(row.inputValue.trim().length==0){
@@ -206,18 +210,21 @@
                     return;
                 }else{
                     row.attr_vals.push(row.inputValue.trim());
-                    const {data:res}=await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`,{
-                        attr_vals:row.attr_vals.join(' '),
-                        attr_name:row.attr_name,
-                        attr_sel:row.attr_sel
-                    });
-                    if(res.meta.status!==200){
-                        return this.$message.error(res.meta.msg);
-                    }
-                    this.$message.success(res.meta.msg);
-                    row.inputValue='';
-                    row.inputVisible=false;
+                    this.setAttrVal(row);
                 }
+            },
+           async setAttrVal(row){
+               const {data:res}=await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`,{
+                   attr_vals:row.attr_vals.join(' '),
+                   attr_name:row.attr_name,
+                   attr_sel:row.attr_sel
+               });
+               if(res.meta.status!==200){
+                   return this.$message.error(res.meta.msg);
+               }
+               this.$message.success(res.meta.msg);
+               row.inputValue='';
+               row.inputVisible=false;
             },
             showInput(row) {
                 row.inputVisible = true;
