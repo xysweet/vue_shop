@@ -20,20 +20,20 @@
                         :visible.sync="dialogVisible"
                         width="30%"
                 >
-                   <el-form :model="addUserForm" :rules="rules" ref="addRef" @close="closeDialog">
-                       <el-form-item label="姓名" prop="name">
-                           <el-input v-model="addUserForm.username"></el-input>
-                       </el-form-item>
-                       <el-form-item label="密码" prop="password" >
-                           <el-input v-model="addUserForm.password" type="password"></el-input>
-                       </el-form-item>
-                       <el-form-item label="邮箱" prop="email">
-                           <el-input v-model="addUserForm.email"></el-input>
-                       </el-form-item>
-                       <el-form-item label="mobile" prop="mobile">
-                           <el-input v-model="addUserForm.mobile"></el-input>
-                       </el-form-item>
-                   </el-form>
+                    <el-form :model="addUserForm" :rules="rules" ref="addRef" @close="closeDialog">
+                        <el-form-item label="姓名" prop="name">
+                            <el-input v-model="addUserForm.username"></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码" prop="password">
+                            <el-input v-model="addUserForm.password" type="password"></el-input>
+                        </el-form-item>
+                        <el-form-item label="邮箱" prop="email">
+                            <el-input v-model="addUserForm.email"></el-input>
+                        </el-form-item>
+                        <el-form-item label="mobile" prop="mobile">
+                            <el-input v-model="addUserForm.mobile"></el-input>
+                        </el-form-item>
+                    </el-form>
                     <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="addUser">确 定</el-button>
@@ -95,9 +95,9 @@
     export default {
         name: "User",
         data() {
-            const checkEmail=(rule,value,callback)=>{
-                const regExp=/^([a-zA-Z0-1_-])+@([a-zA-Z0-1_-])+(\.[a-zA-Z0-1_-])+/;
-                if(regExp.test(value)){
+            const checkEmail = (rule, value, callback) => {
+                const regExp = /^([a-zA-Z0-1_-])+@([a-zA-Z0-1_-])+(\.[a-zA-Z0-1_-])+/;
+                if (regExp.test(value)) {
                     return callback(new Error('error'));
                 }
             }
@@ -121,28 +121,28 @@
                 }],
                 total: 5,
                 dialogVisible: false,
-                addUserForm:{
-                    username:'',
-                    password:'',
-                    email:'',
-                    mobile:'',
+                addUserForm: {
+                    username: '',
+                    password: '',
+                    email: '',
+                    mobile: '',
                 },
-                rules:{
+                rules: {
                     name: [
-                        { required: true, message: 'name', trigger: 'blur' },
-                        { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                        {required: true, message: 'name', trigger: 'blur'},
+                        {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
                     ],
                     password: [
-                        { required: true, message: 'password', trigger: 'blur' },
-                        { min: 6, max: 9, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                        {required: true, message: 'password', trigger: 'blur'},
+                        {min: 6, max: 9, message: '长度在 3 到 5 个字符', trigger: 'blur'}
                     ],
                     email: [
                         {checkEmail},
-                        { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-                        { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+                        {required: true, message: '请输入邮箱地址', trigger: 'blur'},
+                        {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
                     ],
                     mobile: [
-                        { required: true, message: 'mobile', trigger: 'blur' },
+                        {required: true, message: 'mobile', trigger: 'blur'},
                     ],
                 }
             }
@@ -173,29 +173,29 @@
                 this.$http.put(`users/${userState.id}/state/${userState.mg_state}`).then(res => {
                     if (res.data.meta.status !== 200) {
                         userState.mg_state = !userState.mg_state;
-                         this.$message.error(res.data.meta.msg);
+                        this.$message.error(res.data.meta.msg);
                     }
-                     this.$message.success(res.data.meta.msg);
+                    this.$message.success(res.data.meta.msg);
                 });
 
             },
-           addUser(){
-this.$refs.addRef.validate(valid=>{
-    if(!valid) return;
-    let _this=this;
-    this.$http.post('users',this.addUserForm).then(res=>{
-        const data=res.data;
-        if(data.meta.status!== 200){
-            return _this.$message.error(data.meta.msg);
-        }
-        _this.dialogVisible=false;
-        _this.getUserList();
-        _this.$message.success(data.meta.msg);
+            addUser() {
+                this.$refs.addRef.validate(valid => {
+                    if (!valid) return;
+                    let _this = this;
+                    this.$http.post('users', this.addUserForm).then(res => {
+                        const data = res.data;
+                        if (data.meta.status !== 200) {
+                            return _this.$message.error(data.meta.msg);
+                        }
+                        _this.dialogVisible = false;
+                        _this.getUserList();
+                        _this.$message.success(data.meta.msg);
 
-    });
-});
-           },
-            closeDialog(){
+                    });
+                });
+            },
+            closeDialog() {
                 this.$refs.addRef.resetFields();
             }
         }

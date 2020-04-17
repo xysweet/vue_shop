@@ -2,9 +2,13 @@ html,body,#app{
   height: 100%;
   margin: 0;
   padding: 0;
-  min-width: 1366px;
+  min-width: 1166px;
 }
 
 .el-table{
   margin-top: 20px;
+}
+
+.ql-editor{
+  min-height: 300px;
 }

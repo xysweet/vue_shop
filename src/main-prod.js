@@ -18,7 +18,6 @@ axios.interceptors.request.use(config=>{
 
 axios.interceptors.response.use(config=>{
   Nprogress.done();
-  console.log(config);
   return config;
 })
 Vue.prototype.$http=axios;
